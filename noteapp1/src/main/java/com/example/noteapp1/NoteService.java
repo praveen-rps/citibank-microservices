@@ -12,6 +12,6 @@ public interface NoteService {
 	public void deleteNoteById(String pid);
 	public List<Note> searchByTitle(String title);
 	public List<Note> searchByTitleandAuthor(String title,String author);
-	
-	public List<CommentsDto> findCommentsByPid(String pid);
+	public String getCommentsPort();
+	public List<CommentsDto> findCommentsByPid(int pid);
 }

@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 
 @Service
@@ -15,7 +14,9 @@ public class NoteServiceImpl implements NoteService {
 	NoteRepository repo;
 	
 	@Autowired
-	RestTemplate template;
+	CommentProxy template;
+	
+	
 	
 	@Override
 	public List<Note> showAll() {
@@ -53,13 +54,22 @@ public class NoteServiceImpl implements NoteService {
 		// TODO Auto-generated method stub
 		return repo.findByTitleAndAuthor(title, author);
 	}
-
 	@Override
-	public List<CommentsDto> findCommentsByPid(String pid) {
+	public List<CommentsDto> findCommentsByPid(int pid) {
 		// TODO Auto-generated method stub
 		
-		return template.getForObject("http://localhost:8088/comments/findByPid/"+pid, List.class);
+		//return template.getForObject("http://COMMENTS-SERVICE/comments/findByPid/"+pid, List.class);
 		//return null;
+		System.out.println("connecting to comment service.....");
+		return template.getByPid(pid);
+	}
+
+	@Override
+	public String getCommentsPort() {
+		// TODO Auto-generated method stub
+		
+		//return template.getForObject("http://COMMENTS-SERVICE/comments/port", String.class);
+		return template.getPort();
 	}
 
 }
